@@ -11,7 +11,7 @@
 ###
 
 <div align="center">
-  <img src="https://visitor-badge.laobi.icu/badge?page_id=egoan82.egoan82&"  />
+  <img src="https://visitor-badge.laobi.icu/badge?page_id=egoan82.egoan82&left_text=Visitantes"  />
 </div>
 
 ###
