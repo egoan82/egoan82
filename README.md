@@ -108,3 +108,7 @@
 </div>
 
 ###
+
+<img src="https://raw.githubusercontent.com/egoan82/egoan82/output/snake.svg" alt="Snake animation" />
+
+###
