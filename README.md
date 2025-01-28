@@ -101,7 +101,7 @@
 ###
 
 <div align="center">
-  <img src="https://streak-stats.demolab.com?user=egoan82&locale=es&mode=daily&theme=algolia&hide_border=false&border_radius=5&order=3" height="250" alt="streak graph" /> <br>
+  [![GitHub Streak](https://streak-stats.demolab.com?user=egoan82&theme=algolia&border_radius=5)](https://git.io/streak-stats) <br>
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=egoan82&radius=16&theme=github-dark&area=true&order=5&hide_title=false&custom_title=Gr%C3%A1fico%20de%20contribuciones%20de%20Edward%20G%C3%B3mez" height="300" alt="activity-graph graph"  />
 </div>
 
