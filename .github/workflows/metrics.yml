@@ -116,7 +116,7 @@ jobs:
               [/^Highest in a day at (\S+)$/, (_, n) => `${b(n)} como máximo en un día`],
               [/^Average per day at (\S+)$/, (_, n) => `${b(n)} en promedio`],
               [/^These metrics do not include all private contributions$/, () => "No incluye todas las contribuciones privadas"],
-              [/^Last updated (.+?) with (.+)$/, (_, d, v) => `Actualizado el ${d} · ${v}`],
+              [/^Last updated (.+?)(?: \(timezone [^)]*\))? with (.+)$/, (_, d, v) => `Actualizado el ${d} con ${v}`],
             ]
             const root = document.querySelector(".items-wrapper")
             for (const el of root.querySelectorAll(".field, h2, h3, footer span")) {
