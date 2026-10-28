@@ -2275,7 +2275,7 @@ footer { margin-top: 10px; font-size: 10px; font-style: normal; color: #5d6f92; 
             </section>
             <footer>
                 <span><span>No incluye todas las contribuciones privadas</span></span>
-                <span><span>Actualizado el 28 Oct 2026, 10:47:28 (timezone America/Bogota) · lowlighter/metrics@3.34.0-beta</span></span>
+                <span><span>Actualizado el 28 Oct 2026, 10:49:03 con lowlighter/metrics@3.34.0-beta</span></span>
             </footer>
         </div>
         <div xmlns="http://www.w3.org/1999/xhtml" id="metrics-end"></div>
