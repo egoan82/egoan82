@@ -201,12 +201,12 @@ svg.flat { display: block; width: 100%; height: auto; margin-top: 4px; }</style>
                         <rect x="0" y="0" width="460" height="8" fill="white" rx="5"/>
                     </mask>
                     <rect mask="url(#languages-bar)" x="0" y="0" width="0" height="8" fill="#d1d5da"/>
-                    <rect mask="url(#languages-bar)" x="0" y="0" width="138.52912785251334" height="8" fill="#f1e05a"/>
-                    <rect mask="url(#languages-bar)" x="138.52912785251334" y="0" width="116.48687332677119" height="8" fill="#3572A5"/>
-                    <rect mask="url(#languages-bar)" x="255.01600117928453" y="0" width="86.0166336181686" height="8" fill="#41b883"/>
-                    <rect mask="url(#languages-bar)" x="341.0326347974531" y="0" width="62.83475275443777" height="8" fill="#00B4AB"/>
-                    <rect mask="url(#languages-bar)" x="403.8673875518909" y="0" width="37.97077466630527" height="8" fill="#f34b7d"/>
-                    <rect mask="url(#languages-bar)" x="441.83816221819615" y="0" width="18.161837781803833" height="8" fill="#DA3434"/>
+                    <rect mask="url(#languages-bar)" x="0" y="0" width="151.07194158797327" height="8" fill="#f1e05a"/>
+                    <rect mask="url(#languages-bar)" x="151.07194158797327" y="0" width="127.03391983903504" height="8" fill="#3572A5"/>
+                    <rect mask="url(#languages-bar)" x="278.10586142700834" y="0" width="93.80481961449307" height="8" fill="#41b883"/>
+                    <rect mask="url(#languages-bar)" x="371.9106810415014" y="0" width="68.52398657933904" height="8" fill="#00B4AB"/>
+                    <rect mask="url(#languages-bar)" x="440.4346676208404" y="0" width="14.331689457935976" height="8" fill="#427819"/>
+                    <rect mask="url(#languages-bar)" x="454.76635707877637" y="0" width="5.233642921223624" height="8" fill="#89e051"/>
                 </svg>
                 <div class="row fill-width">
                     <section>
@@ -218,7 +218,7 @@ svg.flat { display: block; width: 100%; height: auto; margin-top: 4px; }</style>
                                 JavaScript
                             </div>
                             <small>
-                                <div>30.12%</div>
+                                <div>32.84%</div>
                             </small>
                         </div>
                         <div class="field language details">
@@ -229,18 +229,18 @@ svg.flat { display: block; width: 100%; height: auto; margin-top: 4px; }</style>
                                 Vue
                             </div>
                             <small>
-                                <div>18.7%</div>
+                                <div>20.39%</div>
                             </small>
                         </div>
                         <div class="field language details">
                             <div class="field">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-                                    <path fill="#f34b7d" fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"/>
+                                    <path fill="#427819" fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"/>
                                 </svg>
-                                C++
+                                Makefile
                             </div>
                             <small>
-                                <div>8.25%</div>
+                                <div>3.12%</div>
                             </small>
                         </div>
                     </section>
@@ -253,7 +253,7 @@ svg.flat { display: block; width: 100%; height: auto; margin-top: 4px; }</style>
                                 Python
                             </div>
                             <small>
-                                <div>25.32%</div>
+                                <div>27.62%</div>
                             </small>
                         </div>
                         <div class="field language details">
@@ -264,18 +264,18 @@ svg.flat { display: block; width: 100%; height: auto; margin-top: 4px; }</style>
                                 Dart
                             </div>
                             <small>
-                                <div>13.66%</div>
+                                <div>14.9%</div>
                             </small>
                         </div>
                         <div class="field language details">
                             <div class="field">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-                                    <path fill="#DA3434" fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"/>
+                                    <path fill="#89e051" fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"/>
                                 </svg>
-                                CMake
+                                Shell
                             </div>
                             <small>
-                                <div>3.95%</div>
+                                <div>1.14%</div>
                             </small>
                         </div>
                     </section>
