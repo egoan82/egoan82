@@ -18,6 +18,7 @@ jobs:
           user: egoan82
           filename: metrics.svg
           config_timezone: America/Bogota
+          config_padding: 0, 2
           base: header, activity, community, repositories
           plugin_isocalendar: yes
           plugin_isocalendar_duration: full-year
