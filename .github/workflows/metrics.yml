@@ -17,7 +17,138 @@ jobs:
           token: ${{ secrets.METRICS_TOKEN }}
           user: egoan82
           filename: metrics.svg
+          config_timezone: America/Bogota
           base: header, activity, community, repositories, metadata
           plugin_isocalendar: yes
           plugin_isocalendar_duration: full-year
           plugin_languages: yes
+          plugin_languages_ignored: html, css, scss
+          plugin_languages_limit: 6
+          plugin_languages_details: percentage
+          # Card styling: own navy surface (works on light and dark GitHub themes),
+          # teal-to-lime heat scale for both calendars.
+          extras_css: |
+            :root {
+              --surface: #121c33;
+              --raised: #182540;
+              --line: #24355a;
+              --ink: #eef3fb;
+              --muted: #8d9cb8;
+              --accent: #6fe0c0;
+              --heat-0: #1c2a47;
+              --heat-1: #1a5a63;
+              --heat-2: #1f927d;
+              --heat-3: #4fcf9d;
+              --heat-4: #c3f27a;
+            }
+            svg { color: var(--muted); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif; font-size: 13px; }
+            .items-wrapper {
+              box-sizing: border-box;
+              margin: 1px;
+              padding: 18px 20px 12px;
+              background: var(--surface);
+              border: 1px solid var(--line);
+              border-radius: 16px;
+            }
+            h1, h2, h3 { color: var(--ink); }
+            h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 6px; }
+            h1 .avatar { width: 44px; height: 44px; margin: 0 12px 0 0; box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent); }
+            h2 { font-size: 14px; font-weight: 600; margin: 0 0 8px; color: var(--ink); }
+            h3 { font-size: 12px; font-weight: 600; margin: 8px 0 4px; color: var(--accent); }
+            h2 svg, h3 svg { fill: var(--accent); margin: 0 8px 0 0 !important; }
+            section > .field { margin-left: 0; margin-right: 0; }
+            .field { margin-bottom: 3px; }
+            .field svg { fill: #5d6f92; margin: 0 8px 0 0; }
+            .field b.n { color: var(--ink); font-weight: 650; font-variant-numeric: tabular-nums; margin-right: 1px; }
+            .block { border-top: 1px solid var(--line); padding-top: 14px; margin-top: 14px; }
+            .calendar.field { margin: 2px 0 6px; }
+            .calendar .day { outline: none; }
+            rect.day[fill="#ebedf0"] { fill: var(--heat-0); }
+            [fill="#9be9a8"] { fill: var(--heat-1); }
+            [fill="#40c463"] { fill: var(--heat-2); }
+            [fill="#30a14e"] { fill: var(--heat-3); }
+            [fill="#216e39"] { fill: var(--heat-4); }
+            path[fill="#ebedf0"] { fill: var(--heat-0); }
+            svg.bar { margin: 6px 0 8px; width: 100%; }
+            svg.bar rect[fill="#d1d5da"] { fill: var(--heat-0); }
+            .field.language { margin: 0 12px 2px 0; color: var(--muted); }
+            .field.language svg { margin: 0 4px 0 0; }
+            .column { align-items: stretch; }
+            .column .center { justify-content: flex-start; }
+            footer { margin-top: 10px; font-size: 10px; font-style: normal; color: #5d6f92; text-align: left; padding: 0; }
+          # Spanish labels, bold figures, hide zero-value rows, section dividers.
+          extras_js: |
+            const b = n => `\u0001${n}\u0002`
+            const pl = (n, one, many) => (Number(String(n).replace(/[^\d.]/g, "")) === 1 ? one : many)
+            const units = {year: ["año", "años"], month: ["mes", "meses"], day: ["día", "días"], hour: ["hora", "horas"], minute: ["minuto", "minutos"]}
+            const rules = [
+              [/^Joined GitHub (\S+) (year|month|day|hour|minute)s? ago$/, (_, n, u) => `${b(n)} ${pl(n, ...units[u])} en GitHub`],
+              [/^Followed by (\S+) users?$/, (_, n) => `${b(n)} ${pl(n, "seguidor", "seguidores")}`],
+              [/^Contributed to (\S+) repositor(?:y|ies)$/, (_, n) => `Contribuyó a ${b(n)} ${pl(n, "repositorio", "repositorios")}`],
+              [/^Activity$/, () => "Actividad"],
+              [/^(\S+) Commits?$/, (_, n) => `${b(n)} commits`],
+              [/^(\S+) Pull requests? reviewed$/, (_, n) => `${b(n)} PRs revisados`],
+              [/^(\S+) Pull requests? opened$/, (_, n) => `${b(n)} PRs abiertos`],
+              [/^(\S+) Issues? opened$/, (_, n) => `${b(n)} issues abiertos`],
+              [/^(\S+) issue comments?$/, (_, n) => `${b(n)} comentarios en issues`],
+              [/^Community stats$/, () => "Comunidad"],
+              [/^Member of (\S+) organizations?$/, (_, n) => `Miembro de ${b(n)} ${pl(n, "organización", "organizaciones")}`],
+              [/^Following (\S+) users?$/, (_, n) => `Sigue a ${b(n)} personas`],
+              [/^Sponsoring (\S+) repositor(?:y|ies)$/, (_, n) => `Patrocina ${b(n)} repositorios`],
+              [/^Starred (\S+) repositor(?:y|ies)$/, (_, n) => `${b(n)} repositorios con estrella`],
+              [/^Watching (\S+) repositor(?:y|ies)$/, (_, n) => `Observa ${b(n)} repositorios`],
+              [/^(\S+) Repositor(?:y|ies)$/, (_, n) => `${n} repositorios`],
+              [/^Prefers (.+) license$/, (_, l) => `Licencia favorita: ${b(l)}`],
+              [/^(\S+) Releases?$/, (_, n) => `${b(n)} releases`],
+              [/^(\S+) Packages?$/, (_, n) => `${b(n)} paquetes`],
+              [/^(\S+ \S?B) used$/, (_, n) => `${b(n)} en disco`],
+              [/^(\S+) Sponsors?$/, (_, n) => `${b(n)} patrocinadores`],
+              [/^(\S+) Stargazers?$/, (_, n) => `${b(n)} estrellas recibidas`],
+              [/^(\S+) Forkers?$/, (_, n) => `${b(n)} forks`],
+              [/^(\S+) Watchers?$/, (_, n) => `${b(n)} observadores`],
+              [/^(\S+) Languages?$/, (_, n) => `${n} lenguajes`],
+              [/^Most used languages$/, () => "Lenguajes más usados"],
+              [/^Contributions calendar$/, () => "Contribuciones del último año"],
+              [/^Commits streaks$/, () => "Rachas"],
+              [/^Current streak (\S+) days?$/, (_, n) => `${b(n)} ${pl(n, "día", "días")} de racha actual`],
+              [/^Best streak (\S+) days?$/, (_, n) => `${b(n)} ${pl(n, "día", "días")} en la mejor racha`],
+              [/^Commits per day$/, () => "Commits por día"],
+              [/^Highest in a day at (\S+)$/, (_, n) => `${b(n)} como máximo en un día`],
+              [/^Average per day at (\S+)$/, (_, n) => `${b(n)} en promedio`],
+              [/^These metrics do not include all private contributions$/, () => "No incluye todas las contribuciones privadas"],
+              [/^Last updated (.+?) with (.+)$/, (_, d, v) => `Actualizado el ${d} · ${v}`],
+            ]
+            const root = document.querySelector(".items-wrapper")
+            for (const el of root.querySelectorAll(".field, h2, h3, footer span")) {
+              const node = [...el.childNodes].reverse().find(x => x.nodeType === 3 && x.textContent.trim())
+              if (!node) continue
+              const text = node.textContent.trim().replace(/\s+/g, " ")
+              if (/^0 |\s0( |$)/.test(text) && !/^h[123]$/i.test(el.tagName)) {
+                el.remove()
+                continue
+              }
+              for (const [re, fn] of rules) {
+                if (re.test(text)) {
+                  const ns = "http://www.w3.org/1999/xhtml", span = document.createElementNS(ns, "span")
+                  text.replace(re, fn).split(/(\u0001[^\u0002]*\u0002)/).filter(Boolean).forEach(part => {
+                    if (part[0] !== "\u0001") return span.append(part)
+                    const n = document.createElementNS(ns, "b")
+                    n.setAttribute("class", "n")
+                    n.textContent = part.slice(1, -1)
+                    span.append(n)
+                  })
+                  node.replaceWith(span)
+                  break
+                }
+              }
+            }
+            for (const s of root.querySelectorAll(":scope > section")) {
+              if (s.querySelector(":scope > h1") || s.classList.contains("column")) continue
+              s.classList.add("block")
+            }
+            const bar = root.querySelector("svg.bar")
+            if (bar) {
+              bar.setAttribute("viewBox", `0 0 ${bar.getAttribute("width")} ${bar.getAttribute("height")}`)
+              bar.setAttribute("preserveAspectRatio", "none")
+              bar.removeAttribute("width")
+            }
