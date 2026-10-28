@@ -76,7 +76,10 @@ jobs:
             .column { align-items: stretch; }
             .column .center { justify-content: flex-start; }
             footer { margin-top: 10px; font-size: 10px; font-style: normal; color: #5d6f92; text-align: left; padding: 0; }
-          # Spanish labels, bold figures, hide zero-value rows, section dividers.
+            .streaks h3 { margin-top: 0; }
+            footer { margin: -4px 0 12px; }
+            svg.iso { display: block; width: 100%; height: auto; }
+          # Spanish labels, bold figures, hide zero-value rows, dividers; calendar last and cropped flush.
           extras_js: |
             const b = n => `\u0001${n}\u0002`
             const pl = (n, one, many) => (Number(String(n).replace(/[^\d.]/g, "")) === 1 ? one : many)
@@ -151,4 +154,32 @@ jobs:
               bar.setAttribute("viewBox", `0 0 ${bar.getAttribute("width")} ${bar.getAttribute("height")}`)
               bar.setAttribute("preserveAspectRatio", "none")
               bar.removeAttribute("width")
+            }
+            const iso = root.querySelector("#brightness1")?.closest("svg")
+            const cal = iso?.closest("section")
+            if (cal) {
+              const ns = "http://www.w3.org/1999/xhtml"
+              const stats = cal.querySelector(":scope > .row")
+              const box = document.createElementNS(ns, "section")
+              box.setAttribute("class", "block row streaks")
+              for (const h of [...stats.querySelectorAll("h3")]) {
+                const col = document.createElementNS(ns, "section")
+                let el = h
+                while (el) {
+                  const next = el.nextElementSibling
+                  col.append(el)
+                  el = next && next.tagName.toLowerCase() !== "h3" ? next : null
+                }
+                box.append(col)
+              }
+              cal.before(box)
+              stats.remove()
+              const foot = root.querySelector("footer")
+              if (foot) cal.querySelector(":scope > h2").after(foot)
+              cal.append(iso)
+              iso.removeAttribute("style")
+              const g = iso.querySelector(":scope > g")
+              const r = g.getBoundingClientRect(), s = iso.getBoundingClientRect(), k = 480 / s.width
+              iso.setAttribute("viewBox", `${((r.left - s.left) * k).toFixed(1)} ${((r.top - s.top) * k).toFixed(1)} ${(r.width * k).toFixed(1)} ${(r.height * k).toFixed(1)}`)
+              iso.setAttribute("class", "iso")
             }
