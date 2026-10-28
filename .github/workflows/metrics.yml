@@ -17,7 +17,6 @@ jobs:
           token: ${{ secrets.METRICS_TOKEN }}
           user: egoan82
           filename: metrics.svg
-          debug: yes
           config_timezone: America/Bogota
           base: header, activity, community, repositories
           plugin_isocalendar: yes
@@ -180,7 +179,7 @@ jobs:
               cal.append(iso)
               iso.removeAttribute("style")
               const g = iso.querySelector(":scope > g")
-              const r = g.getBoundingClientRect(), s = iso.getBoundingClientRect(), k = 480 / s.width
-              iso.setAttribute("viewBox", `${((r.left - s.left) * k).toFixed(1)} ${((r.top - s.top) * k).toFixed(1)} ${(r.width * k).toFixed(1)} ${(r.height * k).toFixed(1)}`)
+              const r = g.getBoundingClientRect(), s = iso.getBoundingClientRect(), k = s.width / 480
+              iso.setAttribute("viewBox", `${((r.left - s.left) / k).toFixed(1)} ${((r.top - s.top) / k).toFixed(1)} ${(r.width / k).toFixed(1)} ${(r.height / k).toFixed(1)}`)
               iso.setAttribute("class", "iso")
             }
