@@ -22,6 +22,8 @@ jobs:
           base: header, activity, community, repositories
           plugin_isocalendar: yes
           plugin_isocalendar_duration: full-year
+          plugin_calendar: yes
+          plugin_calendar_limit: 2
           plugin_languages: yes
           plugin_languages_ignored: html, css, scss
           plugin_languages_limit: 6
@@ -79,7 +81,7 @@ jobs:
             footer { margin-top: 10px; font-size: 10px; font-style: normal; color: #5d6f92; text-align: left; padding: 0; }
             .streaks h3 { margin-top: 0; }
             footer { margin: -4px 0 12px; }
-            svg.iso { display: block; width: 100%; height: auto; }
+            svg.flat { display: block; width: 100%; height: auto; margin-top: 4px; }
           # Spanish labels, bold figures, hide zero-value rows, dividers; calendar last and cropped flush.
           extras_js: |
             const b = n => `\u0001${n}\u0002`
@@ -175,12 +177,30 @@ jobs:
               }
               cal.before(box)
               stats.remove()
-              const foot = root.querySelector("footer")
-              if (foot) cal.querySelector(":scope > h2").after(foot)
-              cal.append(iso)
-              iso.removeAttribute("style")
-              const g = iso.querySelector(":scope > g")
-              const r = g.getBoundingClientRect(), s = iso.getBoundingClientRect(), k = s.width / 480
-              iso.setAttribute("viewBox", `${((r.left - s.left) / k).toFixed(1)} ${((r.top - s.top) / k).toFixed(1)} ${(r.width / k).toFixed(1)} ${(r.height / k).toFixed(1)}`)
-              iso.setAttribute("class", "iso")
+              cal.remove()
+            }
+            // Flat calendar: stitch the last 53 weeks of the two yearly grids into one row, placed last.
+            // Note: avoid a standalone asterisk here (the action passes this through the shell).
+            const flat = root.querySelector("svg.calendar")
+            if (flat) {
+              const years = [...flat.querySelectorAll(":scope > g")].reverse()
+              let cols = []
+              for (const y of years) {
+                y.querySelector("text")?.remove()
+                ;[...y.querySelectorAll(":scope > g")].forEach((w, i) => {
+                  const n = w.querySelectorAll("rect").length, prev = cols[cols.length - 1]
+                  if (i === 0 && prev && n < 7 && prev.querySelectorAll("rect").length + n <= 7) return [...w.children].forEach(c => prev.append(c))
+                  cols.push(w)
+                })
+              }
+              cols = cols.slice(-53)
+              const row = document.createElementNS("http://www.w3.org/2000/svg", "g")
+              cols.forEach((w, x) => { w.setAttribute("transform", `translate(${Math.imul(x, 15)}, 0)`); row.append(w) })
+              years.forEach(y => y.remove())
+              flat.append(row)
+              flat.setAttribute("viewBox", `0 4 ${Math.imul(cols.length, 15) - 4} 101`)
+              flat.setAttribute("class", "flat")
+              const sec = flat.closest(".row").parentElement
+              sec.classList.add("block")
+              root.append(sec)
             }
